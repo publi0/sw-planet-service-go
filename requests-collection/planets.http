@@ -1,0 +1,8 @@
+POST {{host}}/v1/starwars/planets/
+Content-Type: application/json
+
+{
+  "name": "Tatooine",
+  "terrain": "Solid",
+  "climate": "Cold"
+}
