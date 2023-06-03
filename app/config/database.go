@@ -1,14 +1,21 @@
 package config
 
 import (
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
+	"context"
+	"github.com/rs/zerolog/log"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+	"os"
 )
 
-func DatabaseConnect() *gorm.DB {
-	db, err := gorm.Open(sqlite.Open("planets.db"), &gorm.Config{})
+const (
+	DatabaseName = "STAR_WARS"
+)
+
+func GetDataBase(ctx context.Context) *mongo.Database {
+	mdb, err := mongo.Connect(ctx, options.Client().ApplyURI(os.Getenv("MONGO_URL")))
 	if err != nil {
-		panic("failed to connect database")
+		log.Ctx(ctx).Fatal().Err(err).Msg("error while connecting to database")
 	}
-	return db
+	return mdb.Database(DatabaseName)
 }

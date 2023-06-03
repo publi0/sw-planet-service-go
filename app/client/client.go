@@ -45,7 +45,7 @@ func (c *Client) FindPlanetFilmAppearances(ctx context.Context, name string) (in
 	}
 
 	err = sonic.Unmarshal(body, &results)
-	if err != nil {
+	if err != nil || len(results.Results) == 0 {
 		return 0, err
 	}
 

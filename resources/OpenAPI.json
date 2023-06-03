@@ -1,0 +1,328 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Star Wars - Planets",
+    "description": "Now you can save your favorite planets and find how many appearances they have in the films!",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "felipe@publio.dev"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "Find out more about Star Wars API",
+    "url": "https://swapi.dev"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/v1/starwars",
+      "description": "local"
+    }
+  ],
+  "tags": [
+    {
+      "name": "planets",
+      "description": "Everything about your Planets"
+    }
+  ],
+  "paths": {
+    "/planets": {
+      "get": {
+        "tags": [
+          "planets"
+        ],
+        "summary": "Find Planets",
+        "description": "Find your planets and filter",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "correlation-id",
+            "description": "Trace identifier",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "description": "Filter planets by name",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Planet"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errors"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "planets"
+        ],
+        "summary": "Create a new planet",
+        "description": "Create a new planet and find they movie appearances",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "correlation-id",
+            "description": "Trace identifier",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePlanet"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Planet Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Planet"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorsFields"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/planets/{id}": {
+      "get": {
+        "tags": [
+          "planets"
+        ],
+        "summary": "Find Planet by ID",
+        "description": "Find your planets by identifier",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "correlation-id",
+            "description": "Trace identifier",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Planet identifier",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Planet"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errors"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Planet not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errors"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "planets"
+        ],
+        "summary": "Delete Planet by ID",
+        "description": "Delete your planet by identifier",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "correlation-id",
+            "description": "Trace identifier",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Planet identifier",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errors"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Planet not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errors"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Planet": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "planet identifier",
+            "example": "f8bbdb90-a9ad-46de-8aa2-8bc5d997153b"
+          },
+          "name": {
+            "type": "string",
+            "example": "Tatooine"
+          },
+          "Terrain": {
+            "type": "string",
+            "example": "Solid"
+          },
+          "Climate": {
+            "type": "string",
+            "example": "Cold"
+          },
+          "FilmAppearances": {
+            "type": "integer",
+            "example": 1
+          }
+        }
+      },
+      "CreatePlanet": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Tatooine",
+            "required": true
+          },
+          "Terrain": {
+            "type": "string",
+            "example": "Solid",
+            "required": true
+          },
+          "Climate": {
+            "type": "string",
+            "example": "Cold",
+            "required": true
+          }
+        }
+      },
+      "Errors": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "description": "error description",
+            "example": "missing correlation id",
+            "type": "string"
+          }
+        }
+      },
+      "ErrorsFields": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "field": {
+                  "description": "field with error",
+                  "type": "string",
+                  "example": "climate"
+                },
+                "msg": {
+                  "type": "string",
+                  "description": "error description",
+                  "example": "invalid value"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
