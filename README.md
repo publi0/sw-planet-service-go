@@ -8,6 +8,9 @@ Star Wars Planet CRUD &amp; API Integration
 
 run `docker-compose up`
 
+run `make run`
+
+
 ## Env Variables
 
 | ENV       | DESCRIPTION                                                                                       |
@@ -19,10 +22,6 @@ run `docker-compose up`
 
 - OpenAPI 
   - Location: resources/OpenAPI.json
-
-- Requests collection
-
-  ![image](https://user-images.githubusercontent.com/14155185/119331527-d49d6f80-bc5d-11eb-93e3-00e2801fe19d.png)
 
 ## Features
 
@@ -36,12 +35,10 @@ run `docker-compose up`
 
 ## Stack
 
-- Java 16
-- Spring Boot
-- Spring Data Mongo
-- Spring Cacheable
+- Go 1.20
+- Gin
 - Mongo Database
-- Feign Client
+- ZeroLog
 - Docker
 
 ## Integrations
